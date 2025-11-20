@@ -1,4 +1,4 @@
-# Hey,
+# Hey
 
 This is the first time I have coded without expectation
 I know this is cringe to future me 
