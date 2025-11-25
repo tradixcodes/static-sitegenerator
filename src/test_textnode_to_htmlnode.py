@@ -13,31 +13,29 @@ class TestTextNodeToHTMLNode(unittest.TestCase):
         self.assertEqual(html_node.value, "This is a text node")
 
     def test_bold_type(self):
-        tn = TextNode(TextType.BOLD, "Bold Text")
+        tn = TextNode("Bold Text", TextType.BOLD)
         node = text_node_to_html_node(tn)
         self.assertEqual(node.tag, "b")
         self.assertEqual(node.value, "Bold Text")
 
-
     def test_italic_type(self):
-        tn = TextNode(TextType.ITALIC, "Italic Text")
+        tn = TextNode("Italic Text", TextType.ITALIC)
         node = text_node_to_html_node(tn)
         self.assertEqual(node.tag, "i")
 
     def test_code_type(self):
-        tn = TextNode(TextType.CODE, "print('hi')")
+        tn = TextNode("print('hi')", TextType.CODE)
         node = text_node_to_html_node(tn)
         self.assertEqual(node.tag, "code")
 
     def test_link_type(self):
-        tn = TextNode(TextType.LINK, "Google", url="https://google.com")
+        tn = TextNode("Google", TextType.LINK, url="https://google.com")
         node = text_node_to_html_node(tn)
         self.assertEqual(node.tag, "a")
         self.assertEqual(node.props, {"href": "https://google.com"})
 
-
     def test_image_type(self):
-        tn = TextNode(TextType.IMAGE, "", url="image.png", alt="Alt Text")
+        tn = TextNode("Alt Text", TextType.IMAGE, url="image.png")
         node = text_node_to_html_node(tn)
         self.assertEqual(node.tag, "img")
         self.assertEqual(node.value, "")
