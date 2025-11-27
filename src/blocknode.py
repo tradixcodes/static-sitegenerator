@@ -11,12 +11,22 @@ class BlockType(Enum):
 
 
 def block_to_block_type(block: str) -> BlockType:
-    lines = block.split("\n")
+    raw_lines = block.split("\n")
 
-    if re.match(r"^#{1,6} ", lines[0]):
+    while raw_lines and raw_lines[0].strip() == "":
+        raw_lines.pop(0)
+    while raw_lines and raw_lines[-1].strip() == "":
+        raw_lines.pop(-1)
+
+    if not raw_lines:
+        return BlockType.PARAGRAPH
+
+    lines = raw_lines
+
+    if len(lines) == 1 and re.match(r"^#{1,6} ", lines[0]):
         return BlockType.HEADING
 
-    if lines[0].startswith("```") and lines[0].endswith("```"):
+    if lines[0].lstrip().startswith("```") and lines[-1].rstrip().endswith("```"):
         return BlockType.CODE
 
     if all(line.startswith(">") for line in lines):
