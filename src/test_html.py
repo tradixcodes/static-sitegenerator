@@ -4,9 +4,9 @@ from markdown_to_html import markdown_to_html_node
 from htmlnode import HTMLNode
 
 class TestMarkdownToHtmlNode(unittest.TestCase):
-"""
-Used to test the larger test_markdown_to_html.py
-"""
+
+# Used to test the larger test_markdown_to_html.py
+
     def test_code_blocks(self):
         md = """
 ```
