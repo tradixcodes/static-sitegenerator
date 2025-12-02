@@ -33,7 +33,7 @@ def copy_recursive(src: Path, dest: Path):
 def sync_static_to_public():
     """Clean the public folder, then copy static → public."""
     src = Path("~/Projects/static-sitegenerator/static/").expanduser()
-    dest = Path("~/Projects/static-sitegenerator/public/").expanduser()
+    dest = Path("~/Projects/static-sitegenerator/docs/").expanduser()
 
     print("🧹 Cleaning destination directory...")
     clean_directory(dest)

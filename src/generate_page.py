@@ -3,7 +3,7 @@ from markdown_to_html import markdown_to_html_node
 from extract_title import extract_title
 from htmlnode import ParentNode, LeafNode
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath="/"):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     # -- Read markdown --
@@ -26,6 +26,7 @@ def generate_page(from_path, template_path, dest_path):
         template_content
         .replace("{{ Title }}", title)
         .replace("{{ Content }}", html_content)
+        .replace('href="/"', f'href="{basepath}"')
     )
     
     # --- Ensure directory exists ---

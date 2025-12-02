@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from generate_page import generate_page
 
-def generate_pages_recursive(dir_path_content: Path, template_path: Path, dest_dir_path: Path):
+def generate_pages_recursive(dir_path_content: Path, template_path: Path, dest_dir_path: Path, basepath="/"):
     """
     Recursively generates HTML pages from all markdown files in `dir_path_content`.
     Each markdown file is converted using `template_path` and written to `dest_dir_path`,
@@ -27,5 +27,6 @@ def generate_pages_recursive(dir_path_content: Path, template_path: Path, dest_d
                 generate_page(
                     from_path=md_path,
                     template_path=template_path,
-                    dest_path=dest_path
+                    dest_path=dest_path,
+                    basepath=basepath
                 )
