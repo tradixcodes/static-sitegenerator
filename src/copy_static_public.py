@@ -4,6 +4,7 @@ from pathlib import Path
 
 def clean_directory(directory: Path):
     if not directory.exists():
+        print(f"Directory doesn't exist!")
         return
 
     for item in directory.iterdir():
@@ -31,8 +32,8 @@ def copy_recursive(src: Path, dest: Path):
 
 def sync_static_to_public():
     """Clean the public folder, then copy static → public."""
-    src = Path("~/projects/static-sitegenerator/static/").expanduser()
-    dest = Path("~/projects/static-sitegenerator/public/").expanduser()
+    src = Path("~/Projects/static-sitegenerator/static/").expanduser()
+    dest = Path("~/Projects/static-sitegenerator/public/").expanduser()
 
     print("🧹 Cleaning destination directory...")
     clean_directory(dest)
