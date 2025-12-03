@@ -35,11 +35,24 @@ class TestTextNodeToHTMLNode(unittest.TestCase):
         self.assertEqual(node.props, {"href": "https://google.com"})
 
     def test_image_type(self):
-        tn = TextNode("Alt Text", TextType.IMAGE, url="image.png")
+        tn = TextNode("Alt Text", TextType.IMAGE, url="/image.png")
         node = text_node_to_html_node(tn)
         self.assertEqual(node.tag, "img")
         self.assertEqual(node.value, "")
-        self.assertEqual(node.props, {"src": "image.png", "alt": "Alt Text"})
+        self.assertEqual(node.props, {"src": "/image.png", "alt": "Alt Text"})
+    
+    def test_link_type_with_basepath(self):
+        tn = TextNode("Google", TextType.LINK, url="/index.html")
+        node = text_node_to_html_node(tn, basepath="/static-site/")
+        self.assertEqual(node.tag, "a")
+        self.assertEqual(node.props, {"href": "/static-site/index.html"})
+
+    def test_image_type_with_basepath(self):
+        tn = TextNode("Alt Text", TextType.IMAGE, url="/image.png")
+        node = text_node_to_html_node(tn, basepath="/static-site/")
+        self.assertEqual(node.tag, "img")
+        self.assertEqual(node.value, "")
+        self.assertEqual(node.props, {"src": "/static-site/image.png", "alt": "Alt Text"})
 
 
     def test_unsupported_type(self):

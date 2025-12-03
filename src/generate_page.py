@@ -27,7 +27,6 @@ def generate_page(from_path, template_path, dest_path, basepath="/"):
         .replace("{{ Title }}", title)
         .replace("{{ Content }}", html_content)
         .replace("{{ BasePath }}", basepath)
-        .replace('href="/"', f'href="{basepath}"')
     )
     
     # --- Ensure directory exists ---
