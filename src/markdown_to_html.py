@@ -5,9 +5,8 @@ from blocknode import BlockType, block_to_block_type
 from htmlnode import ParentNode, LeafNode
 from textnode import TextNode, TextType
 from text_to_children import text_to_children
-from textnode_to_htmlnode import text_node_to_html_node
 
-def markdown_to_html_node(markdown: str) -> "HTMLNode":
+def markdown_to_html_node(markdown: str, basepath="/") -> "HTMLNode":
     """
     Convert a full markdown document into a single parent HTMLNode
     containing all child block-level HTMLNodes.
@@ -25,7 +24,7 @@ def markdown_to_html_node(markdown: str) -> "HTMLNode":
 
         # 4️⃣ Create block node based on type
         if block_type == BlockType.PARAGRAPH:
-            children = text_to_children(block)
+            children = text_to_children(block, basepath=basepath)
             # print(f"These are the children: {children}\n")
             node = ParentNode(tag="p", children=children)
             # print(f"This is the node: {node}\n")
@@ -35,7 +34,7 @@ def markdown_to_html_node(markdown: str) -> "HTMLNode":
             if match:
                 level = len(match.group(1))
                 text = match.group(2)
-                children = text_to_children(text)
+                children = text_to_children(text, basepath=basepath)
                 # print(f"These are the children: {children}\n")
                 node = ParentNode(tag=f"h{level}", children=children)
                 # print(f"This is the node: {node}\n")
@@ -55,27 +54,27 @@ def markdown_to_html_node(markdown: str) -> "HTMLNode":
         elif block_type == BlockType.QUOTE:
             # remove leading '>' from each line
             text = "\n".join(line[1:].strip() for line in block.split("\n"))
-            children = text_to_children(text)
+            children = text_to_children(text, basepath=basepath)
             node = ParentNode(tag="blockquote", children=children)
             # print(f"This is the node: {node}\n")
 
         elif block_type == BlockType.UNORDERED_LIST:
             # each line starts with "- "
             items = [line[2:].strip() for line in block.split("\n")]
-            li_nodes = [ParentNode(tag="li", children=text_to_children(item)) for item in items]
+            li_nodes = [ParentNode(tag="li", children=text_to_children(item, basepath=basepath)) for item in items]
             node = ParentNode(tag="ul", children=li_nodes)
             # print(f"This is the node: {node}\n")
 
         elif block_type == BlockType.ORDERED_LIST:
             # each line starts with a number + ". "
             items = [re.sub(r"^\d+\. ", "", line).strip() for line in block.split("\n")]
-            li_nodes = [ParentNode(tag="li", children=text_to_children(item)) for item in items]
+            li_nodes = [ParentNode(tag="li", children=text_to_children(item, basepath=basepath)) for item in items]
             node = ParentNode(tag="ol", children=li_nodes)
             # print(f"This is the node: {node}\n")
 
         else:
             # fallback: treat as paragraph
-            children = text_to_children(block)
+            children = text_to_children(block, basepath=basepath)
             node = ParentNode(tag="p", children=children)
             # print(f"This is the node: {node}\n")
 

@@ -15,7 +15,7 @@ def generate_page(from_path, template_path, dest_path, basepath="/"):
         template_content = f.read()
 
     # -- Convert markdown -> HTML ---
-    html_node = markdown_to_html_node(markdown_content)
+    html_node = markdown_to_html_node(markdown_content, basepath=basepath)
     html_content = html_node.to_html()
 
     # -- Extract title ---
